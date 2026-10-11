@@ -39,13 +39,36 @@
     return '<div class="th fb" style="background:linear-gradient(135deg,hsl('+hue+',55%,24%),hsl('+(hue+45)+',60%,11%))">'+init+'</div>';
   }
 
-  function card(g){
+  window.XP_toggleDesc = function(idx, btn){
+    var el = document.getElementById("gdesc-" + idx);
+    if(!el) return;
+    var isCol = el.classList.contains("collapsed");
+    if(isCol){
+      el.classList.remove("collapsed");
+      btn.innerHTML = "Show less ▴";
+    } else {
+      el.classList.add("collapsed");
+      btn.innerHTML = "Read more ▾";
+    }
+  };
+
+  function card(g, idx){
     var btn = (g.link && g.link !== "#")
       ? '<a class="btn btn-volt btn-sm" href="'+esc(g.link)+'" target="_blank" rel="noopener">▶ Play</a>'
       : '<a class="btn btn-gho btn-sm" href="#library">Soon</a>';
+    
+    var blurb = esc(g.blurb||"");
+    var descHtml = '';
+    if (blurb.length > 130 || blurb.indexOf('\n') > -1) {
+      descHtml = '<div class="gcard-desc collapsed" id="gdesc-' + idx + '">' + blurb + '</div>' +
+        '<button class="btn-more" type="button" onclick="XP_toggleDesc(' + idx + ', this)">Read more ▾</button>';
+    } else {
+      descHtml = '<div class="gcard-desc">' + blurb + '</div>';
+    }
+
     return '<article class="gcard">'+thumb(g)+
       '<div class="tb"><span class="gtag">'+esc(g.tag||"Game")+'</span>'+
-      '<h3>'+esc(g.title)+'</h3><p>'+esc(g.blurb||"")+'</p>'+
+      '<h3>'+esc(g.title)+'</h3>' + descHtml +
       '<div class="gf">'+btn+'<span class="verified">verified</span></div></div></article>';
   }
 

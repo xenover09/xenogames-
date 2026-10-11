@@ -472,7 +472,7 @@
       '<div style="padding:14px;display:flex;flex-direction:column;gap:6px">' +
         '<span class="game-tag-pill" style="align-self:flex-start">' + esc(tag) + '</span>' +
         '<h4 style="font-size:15px;margin:0">' + esc(title) + (isFeat ? ' ⭐' : '') + '</h4>' +
-        '<p style="font-size:12.5px;color:var(--text-muted);margin:0">' + esc(blurb) + '</p>' +
+        '<p style="font-size:12.5px;color:var(--text-muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">' + esc(blurb) + '</p>' +
       '</div>' +
     '</div>';
   }
