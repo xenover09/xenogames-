@@ -1,1 +1,8 @@
-{"announcement":"","discordUrl":"#","heroSub":"Game mashups, fan ports and impossible crossovers — collected, verified and installed in one click. No 30-step guides. No broken installs. Just press Play.","heroTitle":"","siteName":"Xeno Games","tagline":"Play the crossovers that shouldn't exist."}
+{
+  "siteName": "Xeno Games",
+  "tagline": "Play the crossovers that shouldn't exist.",
+  "heroTitle": "",
+  "heroSub": "Game mashups, fan ports and impossible crossovers — collected, verified and installed in one click. No 30-step guides. No broken installs. Just press Play.",
+  "discordUrl": "#",
+  "announcement": ""
+}
