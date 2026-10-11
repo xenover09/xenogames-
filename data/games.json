@@ -1,64 +1,64 @@
 {
- "games": [
-  {
-   "id": "voxel-neon",
-   "title": "Voxelcraft \u00d7 Neon Rush",
-   "tag": "Mashup",
-   "blurb": "Block-building inside a neon racing world. Fully verified.",
-   "link": "#",
-   "image": "assets/card-voxel.jpg",
-   "hue": 160,
-   "featured": true
-  },
-  {
-   "id": "starfall",
-   "title": "Starfall Vanguard",
-   "tag": "Port",
-   "blurb": "Classic space shooter, rebuilt for PC.",
-   "link": "#",
-   "image": "assets/card-space.jpg",
-   "hue": 210,
-   "featured": true
-  },
-  {
-   "id": "neon-rush",
-   "title": "Neon Rush",
-   "tag": "Mashup",
-   "blurb": "Anti-gravity racing through cyberpunk streets.",
-   "link": "#",
-   "image": "assets/card-neon-racer.jpg",
-   "hue": 290,
-   "featured": false
-  },
-  {
-   "id": "pixel-dungeons",
-   "title": "Pixel Dungeons",
-   "tag": "Fan game",
-   "blurb": "A tiny roguelike with a huge heart.",
-   "link": "#",
-   "image": "",
-   "hue": 30,
-   "featured": false
-  },
-  {
-   "id": "mecha-arena",
-   "title": "Mecha Arena",
-   "tag": "Mashup",
-   "blurb": "Giant robots, small arena, zero mercy.",
-   "link": "#",
-   "image": "",
-   "hue": 200,
-   "featured": false
-  },
-  {
-   "id": "ghost-circuit",
-   "title": "Ghost Circuit",
-   "tag": "Port",
-   "blurb": "Haunted-arcade racer, fan restored.",
-   "link": "#",
-   "image": "",
-   "hue": 260,
-   "featured": false
-  }
- ]
+  "games": [
+    {
+      "id": "voxel-neon",
+      "title": "GRAND THEFT AUTO: VICE CITY IN YOUR BROWSER",
+      "tag": "Mashup",
+      "blurb": "Experience the complete 1986 neon Miami adventure in high definition directly in your browser.\nPowered by WebAssembly and WebGL2 with zero downloads.\nReleased into the sun-soaked criminal underworld of 1986 Vice City after a fifteen-year prison term, Tommy Vercetti is sent south by the Forelli syndicate to oversee an ambitious narcotics expansion. When a violent ambush strips him of both the cash and the product, Tommy refuses to retreat. Instead, he sets out to conquer the city from the ground up-forging uneasy alliances, taking down rival cartels, establishing lucrative front businesses, and seizing total control of the metropolis.",
+      "link": "https://wasmarcade.com/vice-city",
+      "image": "https://m.media-amazon.com/images/I/51-IGGUe5ZL.png",
+      "hue": 160,
+      "featured": true
+    },
+    {
+      "id": "starfall",
+      "title": "Starfall Vanguard",
+      "tag": "Port",
+      "blurb": "Classic space shooter, rebuilt for PC.",
+      "link": "#",
+      "image": "assets/card-space.jpg",
+      "hue": 210,
+      "featured": true
+    },
+    {
+      "id": "neon-rush",
+      "title": "Neon Rush",
+      "tag": "Mashup",
+      "blurb": "Anti-gravity racing through cyberpunk streets.",
+      "link": "#",
+      "image": "assets/card-neon-racer.jpg",
+      "hue": 290,
+      "featured": false
+    },
+    {
+      "id": "pixel-dungeons",
+      "title": "Pixel Dungeons",
+      "tag": "Fan game",
+      "blurb": "A tiny roguelike with a huge heart.",
+      "link": "#",
+      "image": "",
+      "hue": 30,
+      "featured": false
+    },
+    {
+      "id": "mecha-arena",
+      "title": "Mecha Arena",
+      "tag": "Mashup",
+      "blurb": "Giant robots, small arena, zero mercy.",
+      "link": "#",
+      "image": "",
+      "hue": 200,
+      "featured": false
+    },
+    {
+      "id": "ghost-circuit",
+      "title": "Ghost Circuit",
+      "tag": "Port",
+      "blurb": "Haunted-arcade racer, fan restored.",
+      "link": "#",
+      "image": "",
+      "hue": 260,
+      "featured": false
+    }
+  ]
 }
