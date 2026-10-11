@@ -57,6 +57,74 @@
       names+='<span>New crossovers monthly</span><i>◆</i><span>One-click installs</span><i>◆</i>';
       tk.innerHTML=names+names; /* duplicated for seamless loop */
     }
+
+    initSlider();
+  }
+
+  function initSlider(){
+    var slider=document.getElementById("hero-slider");
+    if(!slider) return;
+    var slides=slider.querySelectorAll(".slide");
+    var dots=slider.querySelectorAll(".dot");
+    var prevBtn=document.getElementById("slider-prev");
+    var nextBtn=document.getElementById("slider-next");
+    if(!slides.length) return;
+
+    var cur=0, timer=null;
+    function goTo(n){
+      cur=(n+slides.length)%slides.length;
+      slides.forEach(function(s,i){
+        if(i===cur){ s.classList.add("active"); }
+        else { s.classList.remove("active"); }
+      });
+      dots.forEach(function(d,i){
+        if(i===cur){ d.classList.add("active"); }
+        else { d.classList.remove("active"); }
+      });
+    }
+
+    function next(){ goTo(cur+1); }
+    function prev(){ goTo(cur-1); }
+
+    function startTimer(){
+      stopTimer();
+      timer=setInterval(next, 4500);
+    }
+    function stopTimer(){
+      if(timer){ clearInterval(timer); timer=null; }
+    }
+
+    if(nextBtn) nextBtn.addEventListener("click", function(){ next(); startTimer(); });
+    if(prevBtn) prevBtn.addEventListener("click", function(){ prev(); startTimer(); });
+
+    dots.forEach(function(d,i){
+      d.addEventListener("click", function(){
+        goTo(i);
+        startTimer();
+      });
+    });
+
+    slider.addEventListener("mouseenter", stopTimer);
+    slider.addEventListener("mouseleave", startTimer);
+
+    /* Touch swipe support */
+    var touchStartX = 0;
+    slider.addEventListener("touchstart", function(e){
+      if(e.changedTouches && e.changedTouches[0]){
+        touchStartX = e.changedTouches[0].clientX;
+        stopTimer();
+      }
+    }, {passive:true});
+    slider.addEventListener("touchend", function(e){
+      if(e.changedTouches && e.changedTouches[0]){
+        var diff = e.changedTouches[0].clientX - touchStartX;
+        if(diff > 45) { prev(); }
+        else if(diff < -45) { next(); }
+        startTimer();
+      }
+    }, {passive:true});
+
+    startTimer();
   }
 
   Promise.all([

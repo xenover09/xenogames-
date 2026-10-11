@@ -27,12 +27,51 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="kicker">Xeno Games — Mod Launcher</div>
-    <h1>Play the crossovers that <em>shouldn't exist.</em></h1>
-    <p class="sub" data-herosub>Game mashups, fan ports and impossible crossovers — collected, verified and installed in one click. No 30-step guides. No broken installs. Just press Play.</p>
-    <div class="hero-cta">
-      <a class="btn btn-volt" href="#library">Browse the library</a>
-      <a class="btn btn-gho" href="#launcher">See the launcher</a>
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="kicker">Xeno Games — Mod Launcher</div>
+        <h1>Play the crossovers that <em>shouldn't exist.</em></h1>
+        <p class="sub" data-herosub>Game mashups, fan ports and impossible crossovers — collected, verified and installed in one click. No 30-step guides. No broken installs. Just press Play.</p>
+        <div class="hero-cta">
+          <a class="btn btn-volt" href="#library">Browse the library</a>
+          <a class="btn btn-gho" href="#launcher">See the launcher</a>
+        </div>
+      </div>
+      <div class="hero-slider-wrap">
+        <div class="hero-slider" id="hero-slider" aria-label="Featured Games Showcase">
+          <div class="slider-badge">Featured Showcase</div>
+          <div class="slider-track" id="slider-track">
+            <div class="slide active">
+              <img src="assets/card-voxel.jpg" alt="Voxelcraft × Neon Rush">
+              <div class="slide-caption">
+                <h3>Voxelcraft × Neon Rush</h3>
+                <p>Block-building inside a neon racing world</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img src="assets/card-space.jpg" alt="Starfall Vanguard">
+              <div class="slide-caption">
+                <h3>Starfall Vanguard</h3>
+                <p>Classic space shooter rebuilt for modern PC</p>
+              </div>
+            </div>
+            <div class="slide">
+              <img src="assets/card-neon-racer.jpg" alt="Neon Rush">
+              <div class="slide-caption">
+                <h3>Neon Rush: Cyberpunk</h3>
+                <p>Anti-gravity racing through futuristic circuits</p>
+              </div>
+            </div>
+          </div>
+          <button class="slider-btn prev" id="slider-prev" aria-label="Previous Slide">&#10094;</button>
+          <button class="slider-btn next" id="slider-next" aria-label="Next Slide">&#10095;</button>
+          <div class="slider-dots" id="slider-dots">
+            <button class="dot active" data-index="0" aria-label="Slide 1"></button>
+            <button class="dot" data-index="1" aria-label="Slide 2"></button>
+            <button class="dot" data-index="2" aria-label="Slide 3"></button>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="proof">
       <div class="plabel">Proof — from the community</div>
