@@ -15,70 +15,8 @@
   "announcement": "",
   "announcementEnabled": false,
   "tickerItems": "Voxelcraft × Neon Rush ◆ Starfall Vanguard ◆ Neon Rush ◆ New crossovers monthly ◆ One-click installs",
-  "slides": [
-    {
-      "id": "slide-1",
-      "type": "image",
-      "url": "assets/card-voxel.jpg",
-      "title": "Voxelcraft × Neon Rush",
-      "subtitle": "Block-building inside a neon racing world",
-      "badge": "Featured Showcase",
-      "link": "#library"
-    },
-    {
-      "id": "slide-2",
-      "type": "image",
-      "url": "assets/card-space.jpg",
-      "title": "Starfall Vanguard",
-      "subtitle": "Classic space shooter rebuilt for modern PC",
-      "badge": "Community Port",
-      "link": "#library"
-    },
-    {
-      "id": "slide-3",
-      "type": "image",
-      "url": "assets/card-neon-racer.jpg",
-      "title": "Neon Rush: Cyberpunk",
-      "subtitle": "Anti-gravity racing through futuristic circuits",
-      "badge": "Popular Mashup",
-      "link": "#library"
-    }
-  ],
-  "proofClips": [
-    {
-      "id": "clip-1",
-      "title": "Voxelcraft × Neon Rush",
-      "views": "128K views",
-      "duration": "2:47",
-      "image": "assets/card-voxel.jpg",
-      "link": "#"
-    },
-    {
-      "id": "clip-2",
-      "title": "Starfall Vanguard — full playthrough",
-      "views": "86K views",
-      "duration": "4:12",
-      "image": "assets/card-space.jpg",
-      "link": "#"
-    },
-    {
-      "id": "clip-3",
-      "title": "Neon Rush night circuit",
-      "views": "54K views",
-      "duration": "1:58",
-      "image": "assets/card-neon-racer.jpg",
-      "link": "#"
-    },
-    {
-      "id": "clip-4",
-      "title": "Ghost Circuit restored",
-      "views": "31K views",
-      "duration": "3:15",
-      "image": "",
-      "hue": 280,
-      "link": "#"
-    }
-  ],
+  "slides": [],
+  "proofClips": [],
   "ads": {
     "headerCode": "",
     "contentCode": ""
