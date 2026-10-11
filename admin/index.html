@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Xeno Games</title>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="ahead">
+    <div><h1>Site Admin</h1><p>Games aur settings yahin se manage karein — save karte hi site update ho jayegi.</p></div>
+    <a id="viewSite" class="btn" href="#" target="_blank">View site ↗</a>
+  </header>
+
+  <div id="msg"></div>
+
+  <!-- SETUP -->
+  <section class="card" id="setupCard">
+    <h2>1. GitHub connect karein</h2>
+    <p class="mut">Ye token <b>sirf aapke browser</b> mein save hota hai — kahin aur nahi bheja jata. Sirf <code>api.github.com</code> ko jata hai jab aap Save dabate hain.</p>
+    <div class="grid2">
+      <label>GitHub username<input id="ghUser" placeholder="xenover09"></label>
+      <label>Repo name<input id="ghRepo" placeholder="xenogames"></label>
+      <label>Branch<input id="ghBranch" value="main"></label>
+      <label style="grid-column:1/-1">Personal Access Token (classic, scope: <code>repo</code>)<input id="ghToken" type="password" placeholder="ghp_..."><small><a href="https://github.com/settings/tokens/new?scopes=repo&description=xenogames-admin" target="_blank">Yahan click karke token banayein →</a> (note: xenogames-admin, sirf <b>repo</b> tick karein, Generate)</small></label>
+    </div>
+    <button class="btn pri" id="connectBtn">Connect & Load</button>
+    <button class="btn" id="forgetBtn" style="display:none">Logout (token bhool jayein)</button>
+  </section>
+
+  <!-- GAMES -->
+  <section class="card" id="gamesCard" style="display:none">
+    <h2>2. Games <span class="count" id="gCount"></span></h2>
+    <div id="gamesList"></div>
+    <button class="btn" id="addBtn">+ Naya game add karein</button>
+
+    <div id="editor" style="display:none">
+      <h3 id="edTitle">Game edit karein</h3>
+      <input type="hidden" id="fId">
+      <div class="grid2">
+        <label>Title*<input id="fTitle" placeholder="Voxelcraft × Neon Rush"></label>
+        <label>Tag<input id="fTag" placeholder="Mashup / Port / Fan game"></label>
+        <label style="grid-column:1/-1">Short blurb<textarea id="fBlurb" rows="2" placeholder="Ek line ki description"></textarea></label>
+        <label style="grid-column:1/-1">Game link (Play button kahan jaye)<input id="fLink" placeholder="https://..."></label>
+        <label style="grid-column:1/-1">Image URL (khali = automatic color card)<input id="fImage" placeholder="assets/card-voxel.jpg ya https://..."></label>
+        <label>Card color (hue 0-360)<input id="fHue" type="number" min="0" max="360" value="200"></label>
+        <label class="chk"><input id="fFeat" type="checkbox"> Featured (uper dikhayein)</label>
+      </div>
+      <div class="row">
+        <button class="btn pri" id="saveGameBtn">Game save karein</button>
+        <button class="btn" id="cancelEditBtn">Cancel</button>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:22px">
+      <button class="btn pri big" id="pushBtn">💾 Sab kuch site par publish karein</button>
+    </div>
+    <p class="mut">Publish ke ~1 minute baad site update ho jayegi.</p>
+  </section>
+
+  <!-- CONFIG -->
+  <section class="card" id="cfgCard" style="display:none">
+    <h2>3. Site settings</h2>
+    <div class="grid2">
+      <label>Site name<input id="cName"></label>
+      <label>Tagline<input id="cTag"></label>
+      <label style="grid-column:1/-1">Hero title<input id="cHeroT"></label>
+      <label style="grid-column:1/-1">Hero subtitle<textarea id="cHeroS" rows="2"></textarea></label>
+      <label style="grid-column:1/-1">Discord link<input id="cDiscord" placeholder="https://discord.gg/..."></label>
+      <label style="grid-column:1/-1">Announcement bar (khali = chhupayein)<input id="cAnn"></label>
+    </div>
+    <p class="mut">Settings bhi "Publish" button se save hoti hain.</p>
+  </section>
+</div>
+<script src="admin.js"></script>
+</body>
+</html>
