@@ -8,13 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <nav>
   <div class="wrap nav-in">
-    <a class="logo" href="index.html"><span class="mark" data-logomark>X</span><span data-sitename>Xeno <b>Games</b></span></a>
+    <a class="logo" href="index.html"><img src="assets/logo.png" alt="Xeno Games Logo" class="logo-img"><span data-sitename>Xeno <b>Games</b></span></a>
     <div class="nav-links">
       <a href="#library">Library</a>
       <a href="#launcher">Launcher</a>
@@ -205,7 +206,13 @@
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><h4>Xeno Games</h4><p style="max-width:280px">Game mashups and fan ports — collected, verified and one click away.</p></div>
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+          <img src="assets/logo.png" alt="Xeno Games Logo" class="logo-img" style="width:32px;height:32px">
+          <h4 style="margin:0;font-size:18px">Xeno Games</h4>
+        </div>
+        <p style="max-width:280px">Game mashups and fan ports — collected, verified and one click away.</p>
+      </div>
       <div><h4>Site</h4><a href="#library">Library</a><a href="#launcher">Launcher</a><a href="#faq">FAQ</a></div>
       <div><h4>Info</h4><a href="about.html">About</a><a href="privacy.html">Privacy Policy</a><a href="contact.html">Contact</a></div>
       <div><h4>Community</h4><a data-discord href="#">Discord</a></div>

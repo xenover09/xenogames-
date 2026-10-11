@@ -16,6 +16,19 @@
     ]
   };
 
+  var DEFAULT_SLIDES = [
+    { id: "slide-1", type: "image", url: "assets/card-voxel.jpg", title: "Voxelcraft × Neon Rush", subtitle: "Block-building inside a neon racing world", badge: "Featured Showcase", link: "#library" },
+    { id: "slide-2", type: "image", url: "assets/card-space.jpg", title: "Starfall Vanguard", subtitle: "Classic space shooter rebuilt for modern PC", badge: "Community Port", link: "#library" },
+    { id: "slide-3", type: "image", url: "assets/card-neon-racer.jpg", title: "Neon Rush: Cyberpunk", subtitle: "Anti-gravity racing through futuristic circuits", badge: "Popular Mashup", link: "#library" }
+  ];
+
+  var DEFAULT_PROOF = [
+    { id: "clip-1", title: "Voxelcraft × Neon Rush", views: "128K views", duration: "2:47", image: "assets/card-voxel.jpg", link: "#" },
+    { id: "clip-2", title: "Starfall Vanguard — full playthrough", views: "86K views", duration: "4:12", image: "assets/card-space.jpg", link: "#" },
+    { id: "clip-3", title: "Neon Rush night circuit", views: "54K views", duration: "1:58", image: "assets/card-neon-racer.jpg", link: "#" },
+    { id: "clip-4", title: "Ghost Circuit restored", views: "31K views", duration: "3:15", image: "", hue: 280, link: "#" }
+  ];
+
   function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
   function thumb(g){
@@ -103,8 +116,9 @@
     // Dynamic Hero Slides
     var track=document.getElementById("slider-track");
     var dots=document.getElementById("slider-dots");
-    if(track && cfg.slides && cfg.slides.length){
-      track.innerHTML = cfg.slides.map(function(s, idx){
+    var slidesToRender = (cfg.slides && cfg.slides.length) ? cfg.slides : DEFAULT_SLIDES;
+    if(track && slidesToRender && slidesToRender.length){
+      track.innerHTML = slidesToRender.map(function(s, idx){
         var badge = s.badge ? '<div class="slider-badge">' + esc(s.badge) + '</div>' : '';
         var linkOpen = (s.link && s.link !== '#') ? '<a href="' + esc(s.link) + '" style="display:block;width:100%;height:100%">' : '';
         var linkClose = (s.link && s.link !== '#') ? '</a>' : '';
@@ -115,7 +129,7 @@
       }).join("");
 
       if(dots){
-        dots.innerHTML = cfg.slides.map(function(s, idx){
+        dots.innerHTML = slidesToRender.map(function(s, idx){
           return '<button class="dot ' + (idx === 0 ? 'active' : '') + '" data-index="' + idx + '" aria-label="Slide ' + (idx+1) + '"></button>';
         }).join("");
       }
@@ -123,8 +137,9 @@
 
     // Dynamic Proof Clips
     var proofEl=document.getElementById("proof-clips");
-    if(proofEl && cfg.proofClips && cfg.proofClips.length){
-      proofEl.innerHTML = cfg.proofClips.map(function(c){
+    var proofToRender = (cfg.proofClips && cfg.proofClips.length) ? cfg.proofClips : DEFAULT_PROOF;
+    if(proofEl && proofToRender && proofToRender.length){
+      proofEl.innerHTML = proofToRender.map(function(c){
         var th = c.image
           ? '<div class="th"><img src="'+esc(c.image)+'" alt="'+esc(c.title)+'"><span class="playb">▶</span><span class="dur">'+esc(c.duration||"2:00")+'</span></div>'
           : '<div class="th fb" style="aspect-ratio:16/9;background:linear-gradient(135deg,hsl('+(c.hue||260)+',60%,25%),hsl('+((c.hue||260)+50)+',65%,12%));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:44px;color:#fff">'+esc((c.title||"?").charAt(0))+'</div>';

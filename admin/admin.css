@@ -69,6 +69,16 @@ body {
   border-bottom: 1px solid var(--line);
 }
 
+.brand-logo-img {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid rgba(215, 255, 62, 0.4);
+  box-shadow: 0 0 14px rgba(215, 255, 62, 0.25);
+}
+
 .brand-logo .mark {
   width: 36px;
   height: 36px;
