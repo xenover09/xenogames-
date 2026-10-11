@@ -14,32 +14,36 @@
 
 <nav>
   <div class="wrap nav-in">
-    <a class="logo" href="index.html"><span class="mark">X</span><span data-sitename>Xeno <b>Games</b></span></a>
+    <a class="logo" href="index.html"><span class="mark" data-logomark>X</span><span data-sitename>Xeno <b>Games</b></span></a>
     <div class="nav-links">
       <a href="#library">Library</a>
       <a href="#launcher">Launcher</a>
       <a href="#how">How it works</a>
       <a href="#faq">FAQ</a>
     </div>
-    <a class="btn btn-volt btn-sm" href="#library" style="margin-left:12px">Get the launcher</a>
+    <a class="btn btn-volt btn-sm" href="#library" style="margin-left:12px" data-navcta>Get the launcher</a>
   </div>
 </nav>
+
+<div id="announcement-banner" class="announcement-bar" style="display:none">
+  <div class="wrap" id="announcement-text"></div>
+</div>
 
 <header class="hero">
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-content">
-        <div class="kicker">Xeno Games — Mod Launcher</div>
-        <h1>Play the crossovers that <em>shouldn't exist.</em></h1>
+        <div class="kicker" data-herokicker>Xeno Games — Mod Launcher</div>
+        <h1 data-herotitle>Play the crossovers that <em>shouldn't exist.</em></h1>
         <p class="sub" data-herosub>Game mashups, fan ports and impossible crossovers — collected, verified and installed in one click. No 30-step guides. No broken installs. Just press Play.</p>
         <div class="hero-cta">
-          <a class="btn btn-volt" href="#library">Browse the library</a>
-          <a class="btn btn-gho" href="#launcher">See the launcher</a>
+          <a class="btn btn-volt" href="#library" data-herocta1>Browse the library</a>
+          <a class="btn btn-gho" href="#launcher" data-herocta2>See the launcher</a>
         </div>
       </div>
       <div class="hero-slider-wrap">
         <div class="hero-slider" id="hero-slider" aria-label="Featured Games Showcase">
-          <div class="slider-badge">Featured Showcase</div>
+          <div class="slider-badge" id="slider-badge">Featured Showcase</div>
           <div class="slider-track" id="slider-track">
             <div class="slide active">
               <img src="assets/card-voxel.jpg" alt="Voxelcraft × Neon Rush">
@@ -75,7 +79,7 @@
     </div>
     <div class="proof">
       <div class="plabel">Proof — from the community</div>
-      <div class="clips">
+      <div class="clips" id="proof-clips">
         <div class="clip"><div class="th"><img src="assets/card-voxel.jpg" alt="Voxelcraft × Neon Rush"><span class="playb">▶</span><span class="dur">2:47</span></div><div class="cb"><b>Voxelcraft × Neon Rush</b><span>128K views</span></div></div>
         <div class="clip"><div class="th"><img src="assets/card-space.jpg" alt="Starfall Vanguard"><span class="playb">▶</span><span class="dur">4:12</span></div><div class="cb"><b>Starfall Vanguard — full playthrough</b><span>86K views</span></div></div>
         <div class="clip"><div class="th"><img src="assets/card-neon-racer.jpg" alt="Neon Rush"><span class="playb">▶</span><span class="dur">1:58</span></div><div class="cb"><b>Neon Rush night circuit</b><span>54K views</span></div></div>

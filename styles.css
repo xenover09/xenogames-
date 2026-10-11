@@ -17,6 +17,9 @@ img{display:block;max-width:100%}
 h1,h2,h3{font-family:var(--fh);letter-spacing:-.02em;line-height:1.12}
 ::selection{background:var(--volt);color:#0a0f05}
 
+/* ---------- ANNOUNCEMENT ---------- */
+.announcement-bar{background:linear-gradient(90deg,rgba(215,255,62,.9),rgba(56,189,248,.9));color:#06090e;font-weight:700;font-size:13px;padding:9px 16px;text-align:center;letter-spacing:.02em;position:relative;z-index:65}
+
 /* ---------- NAV ---------- */
 nav{position:sticky;top:0;z-index:60;background:rgba(6,9,14,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav-in{display:flex;align-items:center;height:66px;gap:30px}

@@ -3,76 +3,566 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — Xeno Games</title>
+<title>Xeno Console — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-<div class="wrap">
-  <header class="ahead">
-    <div><h1>Site Admin</h1><p>Games aur settings yahin se manage karein — save karte hi site update ho jayegi.</p></div>
-    <a id="viewSite" class="btn" href="#" target="_blank">View site ↗</a>
-  </header>
 
-  <div id="msg"></div>
-
-  <!-- SETUP -->
-  <section class="card" id="setupCard">
-    <h2>1. GitHub connect karein</h2>
-    <p class="mut">Ye token <b>sirf aapke browser</b> mein save hota hai — kahin aur nahi bheja jata. Sirf <code>api.github.com</code> ko jata hai jab aap Save dabate hain.</p>
-    <div class="grid2">
-      <label>GitHub username<input id="ghUser" placeholder="xenover09"></label>
-      <label>Repo name<input id="ghRepo" placeholder="xenogames"></label>
-      <label>Branch<input id="ghBranch" value="main"></label>
-      <label style="grid-column:1/-1">Personal Access Token (classic, scope: <code>repo</code>)<input id="ghToken" type="password" placeholder="ghp_..."><small><a href="https://github.com/settings/tokens/new?scopes=repo&description=xenogames-admin" target="_blank">Yahan click karke token banayein →</a> (note: xenogames-admin, sirf <b>repo</b> tick karein, Generate)</small></label>
-    </div>
-    <button class="btn pri" id="connectBtn">Connect & Load</button>
-    <button class="btn" id="forgetBtn" style="display:none">Logout (token bhool jayein)</button>
-  </section>
-
-  <!-- GAMES -->
-  <section class="card" id="gamesCard" style="display:none">
-    <h2>2. Games <span class="count" id="gCount"></span></h2>
-    <div id="gamesList"></div>
-    <button class="btn" id="addBtn">+ Naya game add karein</button>
-
-    <div id="editor" style="display:none">
-      <h3 id="edTitle">Game edit karein</h3>
-      <input type="hidden" id="fId">
-      <div class="grid2">
-        <label>Title*<input id="fTitle" placeholder="Voxelcraft × Neon Rush"></label>
-        <label>Tag<input id="fTag" placeholder="Mashup / Port / Fan game"></label>
-        <label style="grid-column:1/-1">Short blurb<textarea id="fBlurb" rows="2" placeholder="Ek line ki description"></textarea></label>
-        <label style="grid-column:1/-1">Game link (Play button kahan jaye)<input id="fLink" placeholder="https://..."></label>
-        <label style="grid-column:1/-1">Image URL (khali = automatic color card)<input id="fImage" placeholder="assets/card-voxel.jpg ya https://..."></label>
-        <label>Card color (hue 0-360)<input id="fHue" type="number" min="0" max="360" value="200"></label>
-        <label class="chk"><input id="fFeat" type="checkbox"> Featured (uper dikhayein)</label>
-      </div>
-      <div class="row">
-        <button class="btn pri" id="saveGameBtn">Game save karein</button>
-        <button class="btn" id="cancelEditBtn">Cancel</button>
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo"><span class="mark">X</span></div>
+      <div class="brand-info">
+        <span class="brand-title">XENO<b>CONSOLE</b></span>
+        <span class="brand-badge">PRO v2.5</span>
       </div>
     </div>
 
-    <div class="row" style="margin-top:22px">
-      <button class="btn pri big" id="pushBtn">💾 Sab kuch site par publish karein</button>
+    <div class="sidebar-user" id="sidebarUser">
+      <div class="user-avatar" id="userAvatar">X</div>
+      <div class="user-meta">
+        <strong id="sidebarUsername">Not Connected</strong>
+        <span id="sidebarRepo">github.com</span>
+      </div>
     </div>
-    <p class="mut">Publish ke ~1 minute baad site update ho jayegi.</p>
-  </section>
 
-  <!-- CONFIG -->
-  <section class="card" id="cfgCard" style="display:none">
-    <h2>3. Site settings</h2>
-    <div class="grid2">
-      <label>Site name<input id="cName"></label>
-      <label>Tagline<input id="cTag"></label>
-      <label style="grid-column:1/-1">Hero title<input id="cHeroT"></label>
-      <label style="grid-column:1/-1">Hero subtitle<textarea id="cHeroS" rows="2"></textarea></label>
-      <label style="grid-column:1/-1">Discord link<input id="cDiscord" placeholder="https://discord.gg/..."></label>
-      <label style="grid-column:1/-1">Announcement bar (khali = chhupayein)<input id="cAnn"></label>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">OVERVIEW</div>
+      <button class="nav-link active" data-tab="dashboard">
+        <span class="icon">📊</span> Dashboard
+      </button>
+
+      <div class="nav-section-title">CONTENT & MEDIA</div>
+      <button class="nav-link" data-tab="hero">
+        <span class="icon">🎬</span> Hero & Media Slider
+        <span class="nav-badge" id="badgeSlides">3</span>
+      </button>
+      <button class="nav-link" data-tab="games">
+        <span class="icon">🎮</span> Games Library
+        <span class="nav-badge" id="badgeGames">0</span>
+      </button>
+      <button class="nav-link" data-tab="proof">
+        <span class="icon">📹</span> Community Proof
+        <span class="nav-badge" id="badgeProof">4</span>
+      </button>
+      <button class="nav-link" data-tab="announcements">
+        <span class="icon">📢</span> Banner & Ticker
+      </button>
+
+      <div class="nav-section-title">CONFIG & MONETIZATION</div>
+      <button class="nav-link" data-tab="branding">
+        <span class="icon">⚙️</span> Site Branding & Links
+      </button>
+      <button class="nav-link" data-tab="ads">
+        <span class="icon">💰</span> AdSense / Ads
+      </button>
+      <button class="nav-link" data-tab="settings">
+        <span class="icon">🔑</span> GitHub API & Sync
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a id="btnViewLiveSite" href="../" target="_blank" class="sidebar-btn-outline">
+        <span>🌐 View Live Site</span> ↗
+      </a>
+      <button id="sidebarLogoutBtn" class="sidebar-btn-danger" style="display:none">
+        Disconnect Token
+      </button>
     </div>
-    <p class="mut">Settings bhi "Publish" button se save hoti hain.</p>
-  </section>
+  </aside>
+
+  <!-- MAIN VIEW -->
+  <main class="main-content">
+    <!-- TOP HEADER -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">☰</button>
+        <div>
+          <h1 id="topbarTitle">Dashboard Overview</h1>
+          <p id="topbarBreadcrumb" class="topbar-sub">Manage games, hero slider media, and site content</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <div class="sync-status-pill disconnected" id="syncStatusPill">
+          <span class="dot"></span>
+          <span id="syncStatusText">Disconnected</span>
+        </div>
+        <button class="btn btn-volt" id="btnPublishTop">
+          <span class="btn-icon">💾</span> Publish All Changes
+        </button>
+      </div>
+    </header>
+
+    <!-- TOAST NOTIFICATIONS -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- TABS CONTAINER -->
+    <div class="tab-content-wrap">
+
+      <!-- ================= TAB: DASHBOARD ================= -->
+      <section class="tab-pane active" id="tab-dashboard">
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(215,255,62,.1);color:var(--volt)">🎮</div>
+            <div class="metric-val" id="dashTotalGames">0</div>
+            <div class="metric-label">Total Games in Library</div>
+            <div class="metric-sub" id="dashFeaturedGames">0 featured</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(56,189,248,.1);color:var(--cyan)">🎬</div>
+            <div class="metric-val" id="dashTotalSlides">3</div>
+            <div class="metric-label">Hero Slides (Images/Videos)</div>
+            <div class="metric-sub">Active in Hero Carousel</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(168,85,247,.1);color:#c084fc">📹</div>
+            <div class="metric-val" id="dashTotalProof">4</div>
+            <div class="metric-label">Community Proof Clips</div>
+            <div class="metric-sub">Verified Showcase items</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-icon" style="background:rgba(52,211,153,.1);color:#34d399">⚡</div>
+            <div class="metric-val" id="dashSyncState">Offline</div>
+            <div class="metric-label">GitHub Integration</div>
+            <div class="metric-sub" id="dashBranchName">main branch</div>
+          </div>
+        </div>
+
+        <div class="grid-2col">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Quick Actions</h2>
+              <span class="panel-hint">Direct shortcuts to frequent tasks</span>
+            </div>
+            <div class="quick-btn-grid">
+              <button class="quick-btn" onclick="XP.switchTab('hero');XP.openSlideEditor('new');">
+                <span class="qb-icon">➕</span>
+                <div>
+                  <strong>Add Hero Slide</strong>
+                  <small>Add new image or video to Hero carousel</small>
+                </div>
+              </button>
+              <button class="quick-btn" onclick="XP.switchTab('games');XP.openGameEditor('new');">
+                <span class="qb-icon">🎮</span>
+                <div>
+                  <strong>Add New Game</strong>
+                  <small>Publish a new title to the games library</small>
+                </div>
+              </button>
+              <button class="quick-btn" onclick="XP.switchTab('hero');">
+                <span class="qb-icon">✏️</span>
+                <div>
+                  <strong>Edit Hero Text</strong>
+                  <small>Customize main titles, subtext & buttons</small>
+                </div>
+              </button>
+              <button class="quick-btn" onclick="XP.downloadBackup();">
+                <span class="qb-icon">📥</span>
+                <div>
+                  <strong>Export Backup JSON</strong>
+                  <small>Save full site config & games to file</small>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>GitHub Pages Connection</h2>
+              <span class="panel-hint">Live synchronization status</span>
+            </div>
+            <div class="connection-status-box" id="connStatusBox">
+              <p class="mut">GitHub token connect nahi hua hai. Live changes directly publish karne ke liye GitHub connect karein.</p>
+              <button class="btn btn-outline" onclick="XP.switchTab('settings')">🔑 GitHub Settings Setup</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: HERO & SHOWCASE ================= -->
+      <section class="tab-pane" id="tab-hero">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Hero Headline & CTA Buttons</h2>
+              <p class="panel-hint">Main landing page text and call-to-action buttons</p>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Kicker / Top Subtitle Tag</label>
+              <input id="hKicker" placeholder="XENO GAMES — MOD LAUNCHER">
+            </div>
+            <div class="form-group">
+              <label>Main Headline (Normal Text)</label>
+              <input id="hTitle" placeholder="Play the crossovers that">
+            </div>
+            <div class="form-group">
+              <label>Headline Highlight (Neon Green Text)</label>
+              <input id="hTitleHighlight" placeholder="shouldn't exist.">
+            </div>
+            <div class="form-group full-width">
+              <label>Hero Subtitle / Description Paragraph</label>
+              <textarea id="hSub" rows="3" placeholder="Game mashups, fan ports and impossible crossovers..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Primary Button Text</label>
+              <input id="hCta1Text" placeholder="Browse the library">
+            </div>
+            <div class="form-group">
+              <label>Primary Button Link</label>
+              <input id="hCta1Link" placeholder="#library">
+            </div>
+            <div class="form-group">
+              <label>Secondary Button Text</label>
+              <input id="hCta2Text" placeholder="See the launcher">
+            </div>
+            <div class="form-group">
+              <label>Secondary Button Link</label>
+              <input id="hCta2Link" placeholder="#launcher">
+            </div>
+          </div>
+        </div>
+
+        <!-- HERO SLIDER MEDIA SHOWCASE -->
+        <div class="panel" style="margin-top:24px">
+          <div class="panel-header flex-between">
+            <div>
+              <h2>Hero Showcase Slides (Images & Videos)</h2>
+              <p class="panel-hint">Carousel slides on the right side of the Hero section. Images ya Videos (MP4/YouTube) yahan se manage karein.</p>
+            </div>
+            <button class="btn btn-volt btn-sm" onclick="XP.openSlideEditor('new')">+ Nayi Slide Add Karein</button>
+          </div>
+
+          <div id="slidesList" class="slides-grid"></div>
+
+          <!-- SLIDE MODAL / DRAWER -->
+          <div id="slideModal" class="modal-backdrop" style="display:none">
+            <div class="modal-card">
+              <div class="modal-header">
+                <h3 id="slideModalTitle">Slide Editor</h3>
+                <button class="modal-close" onclick="XP.closeSlideEditor()">×</button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="slideEditId">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Media Type</label>
+                    <select id="slideMediaType" onchange="XP.updateSlidePreview()">
+                      <option value="image">🖼️ Image (JPG, PNG, WebP, GIF)</option>
+                      <option value="video">🎥 Video (MP4 direct link or YouTube)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Badge / Tag Pill</label>
+                    <input id="slideBadge" placeholder="Featured Showcase / New Mod / Port">
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Media URL or Asset Path</label>
+                    <input id="slideMediaUrl" placeholder="assets/card-voxel.jpg ya https://... ya YouTube link" oninput="XP.updateSlidePreview()">
+                    <small class="field-hint">Aap local path de sakte hain (e.g. <code>assets/filename.jpg</code>), external image link, direct MP4 video link, ya YouTube link.</small>
+                  </div>
+                  <div class="form-group">
+                    <label>Slide Title</label>
+                    <input id="slideTitle" placeholder="Voxelcraft × Neon Rush" oninput="XP.updateSlidePreview()">
+                  </div>
+                  <div class="form-group">
+                    <label>Target Action Link (Optional)</label>
+                    <input id="slideLink" placeholder="#library ya https://...">
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Slide Subtitle / Description</label>
+                    <input id="slideSubtitle" placeholder="Block-building inside a neon racing world" oninput="XP.updateSlidePreview()">
+                  </div>
+                </div>
+
+                <!-- LIVE PREVIEW -->
+                <div class="preview-box-container">
+                  <span class="preview-label">Live Slide Preview</span>
+                  <div class="hero-slider-preview">
+                    <div id="slidePreviewMedia" class="preview-media-holder"></div>
+                    <div class="slider-badge" id="slidePreviewBadge">Featured Showcase</div>
+                    <div class="slide-caption">
+                      <h3 id="slidePreviewTitle">Slide Title</h3>
+                      <p id="slidePreviewSubtitle">Slide description</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-volt" onclick="XP.saveSlide()">Save Slide</button>
+                <button class="btn btn-outline" onclick="XP.closeSlideEditor()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: GAMES LIBRARY ================= -->
+      <section class="tab-pane" id="tab-games">
+        <div class="panel">
+          <div class="panel-header flex-between">
+            <div>
+              <h2>Games Library</h2>
+              <p class="panel-hint">Site par display hone wale games, mashups aur ports.</p>
+            </div>
+            <div class="header-tools">
+              <input type="text" id="gameSearchInput" placeholder="🔍 Search games..." class="search-input" oninput="XP.filterGames()">
+              <button class="btn btn-volt btn-sm" onclick="XP.openGameEditor('new')">+ Naya Game Add Karein</button>
+            </div>
+          </div>
+
+          <div id="gamesTableList" class="games-table-list"></div>
+
+          <!-- GAME MODAL -->
+          <div id="gameModal" class="modal-backdrop" style="display:none">
+            <div class="modal-card">
+              <div class="modal-header">
+                <h3 id="gameModalTitle">Game Editor</h3>
+                <button class="modal-close" onclick="XP.closeGameEditor()">×</button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="gEditId">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Game Title*</label>
+                    <input id="gTitle" placeholder="Voxelcraft × Neon Rush" oninput="XP.updateGamePreview()">
+                  </div>
+                  <div class="form-group">
+                    <label>Category Tag</label>
+                    <input id="gTag" placeholder="Mashup / Port / Fan game" oninput="XP.updateGamePreview()">
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Short Description (Blurb)</label>
+                    <textarea id="gBlurb" rows="2" placeholder="Block-building inside a neon racing world. Fully verified." oninput="XP.updateGamePreview()"></textarea>
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Play / Download Link (URL)</label>
+                    <input id="gLink" placeholder="https://... ya #library">
+                  </div>
+                  <div class="form-group">
+                    <label>Image Cover URL</label>
+                    <input id="gImage" placeholder="assets/card-voxel.jpg ya https://..." oninput="XP.updateGamePreview()">
+                  </div>
+                  <div class="form-group">
+                    <label>Fallback Color Hue (0 - 360)</label>
+                    <input id="gHue" type="number" min="0" max="360" value="200" oninput="XP.updateGamePreview()">
+                  </div>
+                  <div class="form-group full-width">
+                    <label class="toggle-control">
+                      <input type="checkbox" id="gFeatured">
+                      <span class="toggle-slider"></span>
+                      <span><b>Featured Game</b> (Library ke bilkul shuru mein highlight dikhayein)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- GAME PREVIEW -->
+                <div class="preview-box-container">
+                  <span class="preview-label">Card Live Preview</span>
+                  <div class="gcard-preview" id="gameCardPreview"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-volt" onclick="XP.saveGame()">Save Game</button>
+                <button class="btn btn-outline" onclick="XP.closeGameEditor()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: COMMUNITY PROOF ================= -->
+      <section class="tab-pane" id="tab-proof">
+        <div class="panel">
+          <div class="panel-header flex-between">
+            <div>
+              <h2>Community Proof Clips</h2>
+              <p class="panel-hint">Hero section ke neeche proof clips videos jo community views aur gameplay show karte hain.</p>
+            </div>
+            <button class="btn btn-volt btn-sm" onclick="XP.openProofEditor('new')">+ Naya Proof Clip Add Karein</button>
+          </div>
+
+          <div id="proofList" class="proof-grid"></div>
+
+          <!-- PROOF MODAL -->
+          <div id="proofModal" class="modal-backdrop" style="display:none">
+            <div class="modal-card">
+              <div class="modal-header">
+                <h3 id="proofModalTitle">Proof Clip Editor</h3>
+                <button class="modal-close" onclick="XP.closeProofEditor()">×</button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" id="pEditId">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label>Clip Title*</label>
+                    <input id="pTitle" placeholder="Voxelcraft × Neon Rush — full playthrough">
+                  </div>
+                  <div class="form-group">
+                    <label>Views Count Display</label>
+                    <input id="pViews" placeholder="128K views">
+                  </div>
+                  <div class="form-group">
+                    <label>Duration</label>
+                    <input id="pDuration" placeholder="2:47">
+                  </div>
+                  <div class="form-group">
+                    <label>Video / Click Link</label>
+                    <input id="pLink" placeholder="https://youtube.com/... ya #">
+                  </div>
+                  <div class="form-group full-width">
+                    <label>Thumbnail Image URL (Khali = fallback letter badge)</label>
+                    <input id="pImage" placeholder="assets/card-voxel.jpg ya https://...">
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-volt" onclick="XP.saveProof()">Save Clip</button>
+                <button class="btn btn-outline" onclick="XP.closeProofEditor()">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: ANNOUNCEMENTS & TICKER ================= -->
+      <section class="tab-pane" id="tab-announcements">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Top Announcement Bar</h2>
+            <p class="panel-hint">Header ke sab se upar urgent update ya banner show karne ke liye.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="toggle-control">
+                <input type="checkbox" id="annEnabled">
+                <span class="toggle-slider"></span>
+                <span><b>Show Announcement Banner</b></span>
+              </label>
+            </div>
+            <div class="form-group full-width">
+              <label>Banner Text Content</label>
+              <input id="annText" placeholder="🚀 V2.4 Released: New Mashup Engine Now Live!">
+            </div>
+          </div>
+        </div>
+
+        <div class="panel" style="margin-top:24px">
+          <div class="panel-header">
+            <h2>Running Ticker / Marquee</h2>
+            <p class="panel-hint">Hero section ke neeche run hone wali scrolling line ke items (<code>◆</code> se alag karein).</p>
+          </div>
+          <div class="form-group full-width">
+            <label>Ticker Items List</label>
+            <textarea id="tickerItemsText" rows="3" placeholder="Voxelcraft × Neon Rush ◆ Starfall Vanguard ◆ Neon Rush ◆ New crossovers monthly ◆ One-click installs"></textarea>
+            <small class="field-hint">Har item ke darmiyan <code>◆</code> symbol lagayein.</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: BRANDING & GENERAL ================= -->
+      <section class="tab-pane" id="tab-branding">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Site Branding & Socials</h2>
+            <p class="panel-hint">Site ka naam, logo letter, tagline, aur social links.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Site Name</label>
+              <input id="bSiteName" placeholder="Xeno Games">
+            </div>
+            <div class="form-group">
+              <label>Logo Mark Letter</label>
+              <input id="bLogoMark" maxlength="2" placeholder="X">
+            </div>
+            <div class="form-group full-width">
+              <label>Site Tagline (Browser Title & SEO)</label>
+              <input id="bTagline" placeholder="Play the crossovers that shouldn't exist.">
+            </div>
+            <div class="form-group">
+              <label>Discord Community Link</label>
+              <input id="bDiscordUrl" placeholder="https://discord.gg/yourserver">
+            </div>
+            <div class="form-group">
+              <label>Admin Contact Email (contact.html ke liye)</label>
+              <input id="bContactEmail" placeholder="admin@xenogames.example">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: ADSENSE / MONETIZATION ================= -->
+      <section class="tab-pane" id="tab-ads">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Google AdSense & Custom Ads</h2>
+            <p class="panel-hint">Apna Google AdSense code ya HTML ad banner yahan paste karein.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label>Header Ad Slot Code (Hero ke foran baad)</label>
+              <textarea id="adHeaderCode" rows="4" placeholder="<ins class='adsbygoogle' ...></ins>"></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label>In-Content Ad Slot Code (Launcher section ke baad)</label>
+              <textarea id="adContentCode" rows="4" placeholder="<ins class='adsbygoogle' ...></ins>"></textarea>
+            </div>
+          </div>
+          <div class="callout-box">
+            <strong>💡 AdSense Tips:</strong>
+            <p>AdSense approval ke liye pehle games ki description aur Privacy Policy ready honi chahiye. Ad unit create karne ke baad uska <code>&lt;ins&gt;</code> code yahan paste kar ke <b>Publish</b> dabayein.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB: GITHUB SETTINGS ================= -->
+      <section class="tab-pane" id="tab-settings">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>GitHub Authentication & Sync Settings</h2>
+            <p class="panel-hint">Aap ka token sirf aapke browser ki <code>localStorage</code> mein rehta hai — kahin aur nahi jata.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>GitHub Username</label>
+              <input id="cfgGhUser" placeholder="xenover09">
+            </div>
+            <div class="form-group">
+              <label>Repository Name</label>
+              <input id="cfgGhRepo" placeholder="xenogames-">
+            </div>
+            <div class="form-group">
+              <label>Deploy Branch</label>
+              <input id="cfgGhBranch" value="main">
+            </div>
+            <div class="form-group full-width">
+              <label>GitHub Personal Access Token (PAT) — Classic, scope: <code>repo</code></label>
+              <input id="cfgGhToken" type="password" placeholder="ghp_...">
+              <small class="field-hint">
+                <a href="https://github.com/settings/tokens/new?scopes=repo&description=xenogames-admin" target="_blank">
+                  👉 Yahan click kar ke new token banayein
+                </a> (Sirf <b>repo</b> tick karein aur Generate token dabayein).
+              </small>
+            </div>
+          </div>
+          <div class="row" style="margin-top:20px;gap:12px">
+            <button class="btn btn-volt" id="btnSaveGhSettings">💾 Connect & Load from GitHub</button>
+            <button class="btn btn-outline" id="btnExportJson">📥 Export Backup JSON</button>
+            <button class="btn btn-danger" id="btnClearGhAuth">Disconnect & Logout</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
 </div>
+
 <script src="admin.js"></script>
 </body>
 </html>

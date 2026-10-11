@@ -36,6 +36,22 @@
       '<div class="gf">'+btn+'<span class="verified">verified</span></div></div></article>';
   }
 
+  function renderSlideMedia(s) {
+    if (s.type === "video") {
+      var u = s.url || "";
+      var ytId = "";
+      if (u.indexOf("youtu.be/") > -1) { ytId = u.split("youtu.be/")[1].split(/[?&#]/)[0]; }
+      else if (u.indexOf("v=") > -1) { ytId = u.split("v=")[1].split(/[&?#]/)[0]; }
+      else if (u.indexOf("youtube.com/embed/") > -1) { ytId = u.split("youtube.com/embed/")[1].split(/[?&#]/)[0]; }
+      
+      if (ytId) {
+        return '<iframe src="https://www.youtube.com/embed/' + esc(ytId) + '?autoplay=1&mute=1&loop=1&playlist=' + esc(ytId) + '&controls=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="width:100%;height:100%;border:none;pointer-events:none"></iframe>';
+      }
+      return '<video src="' + esc(s.url) + '" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>';
+    }
+    return '<img loading="lazy" src="' + esc(s.url || "assets/card-voxel.jpg") + '" alt="' + esc(s.title || "Game Showcase") + '">';
+  }
+
   function render(data){
     var cfg=data.config||{};
     if(cfg.siteName) document.title=cfg.siteName+" — "+(cfg.tagline||"Play the crossovers that shouldn't exist.");
@@ -43,19 +59,95 @@
       var n=esc(cfg.siteName||"Xeno Games"), i=n.indexOf(" ");
       el.innerHTML = i>0 ? n.slice(0,i)+' <b>'+n.slice(i+1)+'</b>' : '<b>'+n+'</b>';
     });
+    if(cfg.logoMark){
+      document.querySelectorAll("[data-logomark]").forEach(function(el){ el.textContent=cfg.logoMark; });
+    }
+    if(cfg.kicker){
+      document.querySelectorAll("[data-herokicker]").forEach(function(el){ el.textContent=cfg.kicker; });
+    }
+    if(cfg.heroTitle || cfg.heroTitleHighlight){
+      document.querySelectorAll("[data-herotitle]").forEach(function(el){
+        var t=esc(cfg.heroTitle||"Play the crossovers that");
+        var h=cfg.heroTitleHighlight ? ' <em>'+esc(cfg.heroTitleHighlight)+'</em>' : '';
+        el.innerHTML = t + h;
+      });
+    }
     var hs=document.querySelector("[data-herosub]"); if(hs&&cfg.heroSub) hs.textContent=cfg.heroSub;
+    if(cfg.heroCta1Text){
+      document.querySelectorAll("[data-herocta1]").forEach(function(el){
+        el.textContent=cfg.heroCta1Text;
+        if(cfg.heroCta1Link) el.href=cfg.heroCta1Link;
+      });
+    }
+    if(cfg.heroCta2Text){
+      document.querySelectorAll("[data-herocta2]").forEach(function(el){
+        el.textContent=cfg.heroCta2Text;
+        if(cfg.heroCta2Link) el.href=cfg.heroCta2Link;
+      });
+    }
     document.querySelectorAll("[data-discord]").forEach(function(a){ if(cfg.discordUrl) a.href=cfg.discordUrl; });
     document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent=new Date().getFullYear(); });
 
+    // Announcement banner
+    var annBar=document.getElementById("announcement-banner");
+    var annTxt=document.getElementById("announcement-text");
+    if(annBar && annTxt){
+      if(cfg.announcement && cfg.announcementEnabled !== false){
+        annTxt.textContent = cfg.announcement;
+        annBar.style.display = "block";
+      } else {
+        annBar.style.display = "none";
+      }
+    }
+
+    // Dynamic Hero Slides
+    var track=document.getElementById("slider-track");
+    var dots=document.getElementById("slider-dots");
+    if(track && cfg.slides && cfg.slides.length){
+      track.innerHTML = cfg.slides.map(function(s, idx){
+        var badge = s.badge ? '<div class="slider-badge">' + esc(s.badge) + '</div>' : '';
+        var linkOpen = (s.link && s.link !== '#') ? '<a href="' + esc(s.link) + '" style="display:block;width:100%;height:100%">' : '';
+        var linkClose = (s.link && s.link !== '#') ? '</a>' : '';
+        return '<div class="slide ' + (idx === 0 ? 'active' : '') + '">' +
+          badge + linkOpen + renderSlideMedia(s) +
+          '<div class="slide-caption"><h3>' + esc(s.title || "") + '</h3><p>' + esc(s.subtitle || "") + '</p></div>' +
+          linkClose + '</div>';
+      }).join("");
+
+      if(dots){
+        dots.innerHTML = cfg.slides.map(function(s, idx){
+          return '<button class="dot ' + (idx === 0 ? 'active' : '') + '" data-index="' + idx + '" aria-label="Slide ' + (idx+1) + '"></button>';
+        }).join("");
+      }
+    }
+
+    // Dynamic Proof Clips
+    var proofEl=document.getElementById("proof-clips");
+    if(proofEl && cfg.proofClips && cfg.proofClips.length){
+      proofEl.innerHTML = cfg.proofClips.map(function(c){
+        var th = c.image
+          ? '<div class="th"><img src="'+esc(c.image)+'" alt="'+esc(c.title)+'"><span class="playb">▶</span><span class="dur">'+esc(c.duration||"2:00")+'</span></div>'
+          : '<div class="th fb" style="aspect-ratio:16/9;background:linear-gradient(135deg,hsl('+(c.hue||260)+',60%,25%),hsl('+((c.hue||260)+50)+',65%,12%));display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:44px;color:#fff">'+esc((c.title||"?").charAt(0))+'</div>';
+        var clickAttr = (c.link && c.link !== '#') ? ' onclick="window.open(\''+esc(c.link)+'\',\'_blank\')"' : '';
+        return '<div class="clip"' + clickAttr + '>' + th + '<div class="cb"><b>'+esc(c.title)+'</b><span>'+esc(c.views||"")+'</span></div></div>';
+      }).join("");
+    }
+
+    // Games Library
     var games=(data.games||[]).slice().sort(function(a,b){return (b.featured?1:0)-(a.featured?1:0);});
     var grid=document.getElementById("games-grid");
     if(grid) grid.innerHTML=games.map(card).join("")||'<p style="color:var(--mut)">No games yet — check back soon.</p>';
 
+    // Ticker
     var tk=document.getElementById("ticker");
     if(tk){
-      var names=games.map(function(g){return '<span>'+esc(g.title)+'</span><i>◆</i>';}).join("");
-      names+='<span>New crossovers monthly</span><i>◆</i><span>One-click installs</span><i>◆</i>';
-      tk.innerHTML=names+names; /* duplicated for seamless loop */
+      var tItems = cfg.tickerItems ? cfg.tickerItems.split("◆").map(function(x){ return x.trim(); }).filter(Boolean) : [];
+      if(!tItems.length){
+        tItems = games.map(function(g){ return g.title; });
+        tItems.push("New crossovers monthly", "One-click installs");
+      }
+      var tkHtml = tItems.map(function(item){ return '<span>'+esc(item)+'</span><i>◆</i>'; }).join("");
+      tk.innerHTML = tkHtml + tkHtml;
     }
 
     initSlider();
